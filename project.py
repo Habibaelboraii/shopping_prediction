@@ -18,7 +18,8 @@ warnings.filterwarnings('ignore')
 
 ## LOAD DATASET"""
 
-df=pd.read_csv(r'C:\Users\LEGION 5 PRO\Downloads\archive (4)\online_shoppers_intention.csv')
+df = pd.read_csv("online_shoppers_intention.csv")
+
 
 ## EDA"""
 
