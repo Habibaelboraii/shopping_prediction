@@ -187,6 +187,22 @@ df['Revenue'] = y_train
 
 df.head()
 ## classification model
+import os
+import pickle
+from sklearn.ensemble import RandomForestClassifier
+
+# لو ملف pickle مش موجود، درّب الموديل واحفظه
+if not os.path.exists("Rondom Forest_model.pkl"):
+    # افترض إن X_train, y_train موجودين عندك
+    rf = RandomForestClassifier()
+    rf.fit(X_train, y_train)
+    with open("Rondom Forest_model.pkl", "wb") as f:
+        pickle.dump(rf, f)
+
+# بعد كده حمّل الموديل
+with open("Rondom Forest_model.pkl", "rb") as f:
+    model = pickle.load(f)
+
 
 ###  random forest
 
@@ -219,23 +235,6 @@ import streamlit as st
 import pandas as pd
 import pickle
 
-
-import os
-
-from sklearn.ensemble import RandomForestClassifier
-
-# لو الملف مش موجود، اعمل training
-if not os.path.exists("Rondom Forest_model.pkl"):
-    rf = RandomForestClassifier(n_estimators=100, random_state=42)
-    rf.fit(X_train, y_train)
-    
-    # حفظ الموديل بعد التدريب
-    with open("Rondom Forest_model.pkl", "wb") as f:
-        pickle.dump(rf, f)
-
-# تحميل الموديل
-with open("Rondom Forest_model.pkl", "rb") as f:
-    model = pickle.load(f)
 
 # تحميل الموديل
 model = pickle.load(open("Rondom Forest_model.pkl", "rb"))
