@@ -5,3 +5,4 @@ scikit-learn
 streamlit
 xgboost
 imbalanced-learn
+seaborn
