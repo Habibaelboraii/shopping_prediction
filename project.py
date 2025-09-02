@@ -219,6 +219,24 @@ import streamlit as st
 import pandas as pd
 import pickle
 
+
+import os
+
+from sklearn.ensemble import RandomForestClassifier
+
+# لو الملف مش موجود، اعمل training
+if not os.path.exists("Rondom Forest_model.pkl"):
+    rf = RandomForestClassifier(n_estimators=100, random_state=42)
+    rf.fit(X_train, y_train)
+    
+    # حفظ الموديل بعد التدريب
+    with open("Rondom Forest_model.pkl", "wb") as f:
+        pickle.dump(rf, f)
+
+# تحميل الموديل
+with open("Rondom Forest_model.pkl", "rb") as f:
+    model = pickle.load(f)
+
 # تحميل الموديل
 model = pickle.load(open("Rondom Forest_model.pkl", "rb"))
 
