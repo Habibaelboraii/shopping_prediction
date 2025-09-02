@@ -195,7 +195,7 @@ from sklearn.ensemble import RandomForestClassifier
 if not os.path.exists("Rondom Forest_model.pkl"):
     # افترض إن X_train, y_train موجودين عندك
     rf = RandomForestClassifier()
-    rf.fit(X_train, y_train)
+    rf.fit(x_train, y_train)
     with open("Rondom Forest_model.pkl", "wb") as f:
         pickle.dump(rf, f)
 
