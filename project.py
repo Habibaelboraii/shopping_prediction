@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 
 """## LOAD DATASET"""
 
-df=pd.read_csv('"online_shoppers_intention.csv"')
+df=pd.read_csv('online_shoppers_intention.csv')
 
 """## EDA"""
 
