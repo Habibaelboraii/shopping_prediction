@@ -100,7 +100,7 @@ df.drop(columns=['Administrative','Administrative_Duration','Informational','Inf
 
 df.head()
 
-df.columns
+#df.columns
 
 ### 2- drop duplicates"""
 
@@ -232,10 +232,21 @@ print(classification_report(y_test,rf_pred))
 
 cm=confusion_matrix(y_test,rf_pred)
 
-cm
+#cm
 
 sns.heatmap(cm,annot=True)
 plt.show()
+
+
+
+import pickle
+
+# بعد تدريب الموديل
+rf.fit(x_train, y_train)
+
+# حفظ الموديل
+with open("Rondom Forest_model.pkl", "wb") as f:
+    pickle.dump(rf, f)
 
 # ## GUI ##
 import streamlit as st
@@ -249,7 +260,7 @@ st.title("🛒 Online Shopper Intention Prediction")
 
 with st.form("input_form"):
     st.write("Enter the values of features: ")
-    ProductRelated_Duration = st.number_input("ProductRelated_Duration", min_value=0, max_value=500, value=0, key='prd')
+    ProductRelated_Duration = st.number_input("ProductRelated_Duration", min_value=0.0, max_value=6000.0, value=0.0, key='prd')
     ProductRelated = st.number_input("ProductRelated", min_value=0, max_value=500, value=0, key='pr')
     BounceRates = st.number_input("BounceRates", min_value=0.0, max_value=1.0, value=0.0, key='br')
     ExitRates = st.number_input("ExitRates", min_value=0.0, max_value=1.0, value=0.0, key='er')
