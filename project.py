@@ -16,11 +16,11 @@ import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
 
-"""## LOAD DATASET"""
+## LOAD DATASET"""
 
 df=pd.read_csv('online_shoppers_intention.csv')
 
-"""## EDA"""
+## EDA"""
 
 df.head()
 
@@ -89,10 +89,10 @@ plt.show()
 sns.pairplot(data=df)
 plt.show()
 
-"""## preprocessing
+## preprocessing
 
 ### 1- feature selection
-"""
+
 
 df.head()
 
@@ -102,13 +102,13 @@ df.head()
 
 df.columns
 
-"""### 2- drop duplicates"""
+### 2- drop duplicates"""
 
 df=df.drop_duplicates()
 
 df.duplicated().sum()
 
-"""### 3- remove outlier"""
+### 3- remove outlier"""
 
 df.describe()
 
@@ -148,7 +148,7 @@ plt.show()
 
 df.describe()
 
-"""### 4- Encoding"""
+### 4- Encoding"""
 
 df.info()
 
@@ -163,7 +163,7 @@ df['Weekend']=le.fit_transform(df['Weekend'])
 
 df.info()
 
-"""### 5-split data"""
+### 5-split data"""
 
 sns.countplot(x='Revenue',data=df)
 plt.show()
@@ -181,7 +181,7 @@ x_train,x_test,y_train,y_test=train_test_split(x,y,
                                               test_size=.2,
                                               random_state=42)
 
-"""### 5- Imbalance data"""
+### 5- Imbalance data"""
 
 from imblearn.over_sampling import SMOTE
 
@@ -203,10 +203,10 @@ df.head()
 sns.countplot(x='Revenue',data=df)
 plt.show()
 
-"""## classification model
+## classification model
 
 ###  random forest
-"""
+
 
 from sklearn.ensemble import RandomForestClassifier
 
@@ -237,11 +237,12 @@ cm
 sns.heatmap(cm,annot=True)
 plt.show()
 
+# ## GUI ##
 import streamlit as st
 import pandas as pd
 import pickle
 
-
+# تحميل الموديل
 model = pickle.load(open("Rondom Forest_model.pkl", "rb"))
 
 st.title("🛒 Online Shopper Intention Prediction")
@@ -259,12 +260,14 @@ with st.form("input_form"):
     Weekend = st.selectbox("Weekend", [0, 1], key='we')
 
 
-
+   
     submitted = st.form_submit_button("Predict")
+
 if submitted:
+   
     from sklearn.preprocessing import LabelEncoder
 
-
+    
     le_month = LabelEncoder()
     le_month.fit(["Feb","Mar","May","June","Jul","Aug","Sep","Oct","Nov","Dec"])
     Month_encoded = le_month.transform([Month])[0]
@@ -273,9 +276,9 @@ if submitted:
     le_visitor.fit(["Returning_Visitor", "New_Visitor", "Other"])
     VisitorType_encoded = le_visitor.transform([VisitorType])[0]
 
-    Weekend_encoded = int(Weekend)
+    Weekend_encoded = int(Weekend)  
 
-
+    
     input_data = pd.DataFrame({
         "ProductRelated_Duration": [ProductRelated_Duration],
         "ProductRelated": [ProductRelated],
@@ -288,13 +291,9 @@ if submitted:
         "Weekend": [Weekend_encoded]
     })
 
-
-    input_data = input_data[model.feature_names_in_]
-
-
+    
     prediction = model.predict(input_data)[0]
     if prediction == 1:
         st.success("✅ The client will purchase the products")
     else:
         st.error("❌ The client will NOT purchase the products")
-
